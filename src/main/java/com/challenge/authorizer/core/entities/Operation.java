@@ -1,17 +1,17 @@
 package com.challenge.authorizer.core.entities;
 
-import com.challenge.authorizer.core.entities.enums.Violations;
+import com.challenge.authorizer.core.entities.enums.Violation;
 
 import java.util.List;
 
 public abstract class Operation {
-	private List<Violations> violations;
+	private List<Violation> violations;
 
-	public List<Violations> getViolations() {
+	public List<Violation> getViolations() {
 		return violations;
 	}
 
-	public void setViolations(List<Violations> violations) {
+	public void setViolations(List<Violation> violations) {
 		this.violations = violations;
 	}
 }
