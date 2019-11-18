@@ -1,6 +1,6 @@
 package com.challenge.authorizer.core.usecases.validates;
 
-import com.challenge.authorizer.core.entities.enums.Violations;
+import com.challenge.authorizer.core.entities.enums.Violation;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,15 +9,15 @@ import java.util.List;
 @Service
 public class ValidateAccount {
 
-	public List<Violations> execute(Boolean exist) {
+	public List<Violation> execute(Boolean exist) {
 		return this.validateExistance(exist);
 	}
 
-	private List<Violations> validateExistance(Boolean exist) {
-		List<Violations> violations = new ArrayList<>();
+	private List<Violation> validateExistance(Boolean exist) {
+		List<Violation> violations = new ArrayList<>();
 
 		if(exist) {
-			violations.add(Violations.ACCOUNT_ALREADY_INITIALIZED);
+			violations.add(Violation.ACCOUNT_ALREADY_INITIALIZED);
 		}
 
 		return violations;
