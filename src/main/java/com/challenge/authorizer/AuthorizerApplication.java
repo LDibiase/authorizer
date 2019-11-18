@@ -59,7 +59,7 @@ public class AuthorizerApplication implements Runnable {
 	}
 
 	private void transactionFlow(ObjectMapper objectMapper, TransactionDTO transactionDTO) {
-		if (transactionDTO != null) {
+		if (transactionDTO.getTransactionInfo() != null) {
 			Transaction transaction = Transaction.newBuilder()
 					.withTransactionInfo(TransactionInfo.newBuilder()
 							.withAmount(transactionDTO.getTransactionInfo().getAmount())
@@ -76,7 +76,7 @@ public class AuthorizerApplication implements Runnable {
 	}
 
 	private void accountFlow(ObjectMapper objectMapper, AccountDTO accountDTO) {
-		if (accountDTO != null) {
+		if (accountDTO.getAccountStatus() != null) {
 			account = createAccount.execute(accountDTO, accountExist, account);
 			accountExist = true;
 

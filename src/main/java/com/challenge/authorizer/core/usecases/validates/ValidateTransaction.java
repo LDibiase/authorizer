@@ -20,8 +20,8 @@ public class ValidateTransaction {
 	public List<Violation> execute(Account account, Transaction transaction) {
 		List<Violation> violations = new ArrayList<>();
 
-		this.validateLimit(account, transaction, violations);
 		this.validateActive(account, violations);
+		this.validateLimit(account, transaction, violations);
 		this.validateFrequency(account, transaction, violations);
 		this.validateDoubleTransaction(account, transaction, violations);
 
@@ -29,7 +29,11 @@ public class ValidateTransaction {
 	}
 
 	private void validateDoubleTransaction(Account account, Transaction transaction, List<Violation> violations) {
-		List<Transaction> transactions = account.getTransactions();
+		if(account.getTransactions().size() == 0) {
+			return;
+		}
+
+		List<Transaction> transactions = new ArrayList<>(account.getTransactions());
 		transactions.add(transaction);
 
 		List<Transaction> result = transactions.stream().filter(trans -> (
@@ -44,7 +48,11 @@ public class ValidateTransaction {
 	}
 
 	private void validateFrequency(Account account, Transaction transaction, List<Violation> violations) {
-		List<Transaction> transactions = account.getTransactions();
+		if(account.getTransactions().size() == 0) {
+			return;
+		}
+
+		List<Transaction> transactions = new ArrayList<>(account.getTransactions());
 		transactions.add(transaction);
 
 		List<Transaction> result = transactions.stream().filter(trans ->

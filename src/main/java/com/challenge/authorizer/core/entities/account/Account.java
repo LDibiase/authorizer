@@ -2,11 +2,13 @@ package com.challenge.authorizer.core.entities.account;
 
 import com.challenge.authorizer.core.entities.Operation;
 import com.challenge.authorizer.core.entities.enums.Violation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
 public class Account extends Operation {
 	private AccountStatus accountStatus;
+	@JsonIgnore
 	private List<Transaction> transactions;
 
 	private Account(Builder builder) {

@@ -27,9 +27,9 @@ public class CreateAccount {
 							.withActiveCard(accountDTO.getAccountStatus().getActiveCard())
 							.withAvailableLimit(accountDTO.getAccountStatus().getAvailableLimit())
 							.build())
+					.withViolations(new ArrayList<>())
+					.withTransactions(new ArrayList<>())
 					.build();
-
-			account.setViolations(new ArrayList<>());
 		}
 		this.setViolations(account, violations);
 		return account;
