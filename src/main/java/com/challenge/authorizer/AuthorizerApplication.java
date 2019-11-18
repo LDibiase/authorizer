@@ -1,8 +1,6 @@
 package com.challenge.authorizer;
 
-import com.challenge.authorizer.core.entities.Operation;
 import com.challenge.authorizer.core.entities.account.Account;
-import com.challenge.authorizer.core.entities.enums.Operations;
 import com.challenge.authorizer.core.usecases.CreateAccount;
 import com.challenge.authorizer.repositories.dto.AccountDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
