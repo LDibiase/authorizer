@@ -4,6 +4,9 @@ public class AccountStatus {
 	private Boolean activeCard;
 	private Integer availableLimit;
 
+	public AccountStatus() {
+	}
+
 	private AccountStatus(Builder builder) {
 		setActiveCard(builder.activeCard);
 		setAvailableLimit(builder.availableLimit);
