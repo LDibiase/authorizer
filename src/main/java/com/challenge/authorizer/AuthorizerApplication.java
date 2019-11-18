@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 @SpringBootApplication
-public class AuthorizerApplication implements Runnable {
+public class AuthorizerApplication {
 	private static String command;
 	private static Boolean accountExist = false;
 	private static Account account = null;
@@ -35,30 +35,21 @@ public class AuthorizerApplication implements Runnable {
 	public static void main(String[] args) {
 		SpringApplication.run(AuthorizerApplication.class, args);
 
-		AuthorizerApplication reader = new AuthorizerApplication(createAccount, processTransaction);
-		Thread thread = new Thread(reader);
-		thread.start();
-	}
-
-	@Override
-	public void run() {
 		Scanner scanner = new Scanner(System.in);
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.findAndRegisterModules();
 
-		while (true) {
+		while (scanner.hasNext()) {
 			command = scanner.nextLine();
-
-			AccountDTO accountDTO = this.getAccountOperation(command, objectMapper);
-			TransactionDTO transactionDTO = this.getTransactionOperation(command, objectMapper);
+			AccountDTO accountDTO = getAccountOperation(command, objectMapper);
+			TransactionDTO transactionDTO = getTransactionOperation(command, objectMapper);
 
 			accountFlow(objectMapper, accountDTO);
 			transactionFlow(objectMapper, transactionDTO);
-
 		}
 	}
 
-	private void transactionFlow(ObjectMapper objectMapper, TransactionDTO transactionDTO) {
+	private static void transactionFlow(ObjectMapper objectMapper, TransactionDTO transactionDTO) {
 		if (transactionDTO != null && transactionDTO.getTransactionInfo() != null) {
 			Transaction transaction = Transaction.newBuilder()
 					.withTransactionInfo(TransactionInfo.newBuilder()
@@ -69,22 +60,22 @@ public class AuthorizerApplication implements Runnable {
 					.withViolations(new ArrayList<>())
 					.build();
 
-			account = this.processTransaction.execute(account, transaction);
+			account = processTransaction.execute(account, transaction);
 
-			this.showResult(account, objectMapper);
+			showResult(account, objectMapper);
 		}
 	}
 
-	private void accountFlow(ObjectMapper objectMapper, AccountDTO accountDTO) {
+	private static void accountFlow(ObjectMapper objectMapper, AccountDTO accountDTO) {
 		if (accountDTO != null && accountDTO.getAccountStatus() != null) {
 			account = createAccount.execute(accountDTO, accountExist, account);
 			accountExist = true;
 
-			this.showResult(account, objectMapper);
+			showResult(account, objectMapper);
 		}
 	}
 
-	private TransactionDTO getTransactionOperation(String command, ObjectMapper objectMapper) {
+	private static TransactionDTO getTransactionOperation(String command, ObjectMapper objectMapper) {
 		TransactionDTO transactionDTO = null;
 
 		try {
@@ -95,7 +86,7 @@ public class AuthorizerApplication implements Runnable {
 		return transactionDTO;
 	}
 
-	private AccountDTO getAccountOperation(String command, ObjectMapper objectMapper) {
+	private static AccountDTO getAccountOperation(String command, ObjectMapper objectMapper) {
 		AccountDTO accountDTO = null;
 		try {
 			accountDTO = objectMapper.readValue(command, AccountDTO.class);
@@ -105,14 +96,14 @@ public class AuthorizerApplication implements Runnable {
 		return accountDTO;
 	}
 
-	private void showResult(Account account, ObjectMapper objectMapper) {
+	private static void showResult(Account account, ObjectMapper objectMapper) {
 		JSONObject json = null;
 		try {
 			json = new JSONObject(objectMapper.writeValueAsString(account));
 		} catch (JSONException | JsonProcessingException e) {
 			e.printStackTrace();
 		}
-
+		System.out.println();
 		System.out.println(json);
 	}
 }
