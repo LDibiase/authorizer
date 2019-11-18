@@ -1,10 +1,10 @@
-package com.challenge.authorizer.core.entities;
+package com.challenge.authorizer.core.entities.account;
 
-public class Account {
+public class AccountStatus {
 	private Boolean activeCard;
 	private Integer availableLimit;
 
-	private Account(Builder builder) {
+	private AccountStatus(Builder builder) {
 		setActiveCard(builder.activeCard);
 		setAvailableLimit(builder.availableLimit);
 	}
@@ -47,8 +47,8 @@ public class Account {
 			return this;
 		}
 
-		public Account build() {
-			return new Account(this);
+		public AccountStatus build() {
+			return new AccountStatus(this);
 		}
 	}
 }
